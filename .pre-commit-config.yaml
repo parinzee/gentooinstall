@@ -2,29 +2,36 @@ fail_fast: true
 repos:
   - repo: local
     hooks:
-      - id: system
+      - id: black
         name: Black
         entry: poetry run black .
         pass_filenames: false
         language: system
   - repo: local
     hooks:
-      - id: system
+      - id: isort
         name: isort
         entry: poetry run isort .
         pass_filenames: false
         language: system
   - repo: local
     hooks:
-      - id: system
+      - id: mypy
         name: MyPy
-        entry: poetry run mypy
+        entry: poetry run mypy gentooinstall tests
         pass_filenames: false
         language: system
   - repo: local
     hooks:
-      - id: system
+      - id: pylint
         name: Pylint
-        entry: poetry run pylint -j 4 gentooinstall
+        entry: poetry run pylint -j 4 gentooinstall tests
+        pass_filenames: false
+        language: system
+  - repo: local
+    hooks:
+      - id: pytest
+        name: Pytest
+        entry: poetry run pytest
         pass_filenames: false
         language: system

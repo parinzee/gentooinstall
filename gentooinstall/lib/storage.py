@@ -16,4 +16,8 @@ class Storage(TypedDict):
     drives: str
 
 
-storage: Storage = {"args": Namespace(), "mountpoint": "/mnt/gentoo", "drives": ""}
+storage: Storage = {
+    "args": Namespace(),
+    "mountpoint": "/mnt/gentoo",
+    "drives": "",
+}

@@ -1,5 +1,6 @@
 # pylint: disable=missing-module-docstring
 import argparse
+import os
 
 from .lib.storage import storage
 from .script import *
@@ -21,3 +22,16 @@ parser.add_argument(
 
 # Keep the args in our storage
 storage["args"] = parser.parse_args()
+
+
+def run_as_module():
+    """
+    Running this program as a module, so this and __main__ will act as entry point.
+    """
+
+    # Before running the app check if we have root permissions.
+    if os.geteuid() != 0:
+        raise PermissionError("You need to be root to run this script")
+
+    script = Script()
+    script.execute()

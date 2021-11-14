@@ -2,10 +2,15 @@
 import argparse
 import os
 
+from rich.traceback import install
+
 from .lib.storage import storage
 from .script import *
 
 __version__ = "0.1.0"
+
+# Install rich as traceback handler
+install()
 
 # Initialize argument parser
 parser = argparse.ArgumentParser(

@@ -1,5 +1,5 @@
 """
-Simple module for storing arguments that can be accessed throughout the program
+Simple module for storing options that can be accessed throughout the program
 """
 from argparse import Namespace
 from typing import Optional, TypedDict
@@ -29,7 +29,7 @@ class Storage(TypedDict):
 
 
 storage: Storage = {
-    "args": Namespace(),
+    "args": Namespace(no_info=False),
     "mountpoint": "/mnt/gentoo",
     "drives": {"root": "", "boot": "", "swap": None},
     "efi": False,

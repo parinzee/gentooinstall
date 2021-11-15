@@ -34,7 +34,6 @@ class NetworkError(Exception):
 class CommandError(subprocess.CalledProcessError):
     """
     Exception raised when a subprocess.run command fails.
-    Attributes
     """
 
     def __init__(
@@ -49,3 +48,9 @@ class CommandError(subprocess.CalledProcessError):
                         If the problem persists, report the issue on github.
                         """
         super().__init__(returncode, cmd, output=output, stderr=stderr)
+
+
+class HardwareIncompatable(Exception):
+    """
+    Exception raised when Hardware is incompatable
+    """

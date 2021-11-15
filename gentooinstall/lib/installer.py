@@ -7,12 +7,13 @@ import subprocess
 import requests
 from rich.progress import Progress
 
-from .exceptions import CommandError, NetworkError
+from .exceptions import CommandError, HardwareIncompatable, NetworkError
 from .gui import display
+from .hardware import Hardware
 from .storage import storage
 
 
-def preliminary_checks():
+def preliminary_checks(hardware: Hardware):
     """
     This function does the following:
     - Check for minimum hardware requirements
@@ -21,6 +22,13 @@ def preliminary_checks():
     """
     with Progress(expand=True) as progress:
         # Check hardware for minimum requirements
+        check_hardware_compat = progress.add_task(
+            "[yellow]Gathering information about hardware...[/yellow]"
+        )
+        progress.update(check_hardware_compat, advance=50)
+        if not hardware.hardware_compatable():
+            raise HardwareIncompatable("Your hardware is incompatable")
+        progress.update(check_hardware_compat, advance=50)
 
         # Check for internet access
         try:
@@ -58,5 +66,6 @@ def execute() -> None:
     display.show_welcome()
     display.show_options()
 
-    # Check for network connection
-    preliminary_checks()
+    # Run checks before starting install
+    hardware = Hardware()
+    preliminary_checks(hardware)

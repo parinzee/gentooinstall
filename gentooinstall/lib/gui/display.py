@@ -38,3 +38,5 @@ def show_options() -> None:
     """
     if storage["args"].no_info:  # pylint: disable=no-member
         warn("--no-info is on, will not show informative options.")
+    if storage["args"].no_ntp:
+        warn("--no-ntp is on. Be sure you have set your system time correctly.")

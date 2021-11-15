@@ -5,6 +5,16 @@ from argparse import Namespace
 from typing import Optional, TypedDict
 
 
+class Args(Namespace):
+    # pylint: disable=too-few-public-methods
+    """
+    Schema for the args dictionary inside Storage
+    """
+
+    no_info: bool
+    no_ntp: bool
+
+
 class Drives(TypedDict):
     """
     Schema for the drives dictionary in Storage
@@ -16,20 +26,19 @@ class Drives(TypedDict):
     swap: Optional[str]
 
 
-# Define schema for the Storage dict
 class Storage(TypedDict):
     """
     Schema for the storage dictionary
     """
 
-    args: Namespace
+    args: Args
     mountpoint: str
     drives: Drives
     efi: bool
 
 
 storage: Storage = {
-    "args": Namespace(no_info=False),
+    "args": Args(no_info=False, no_ntp=False),
     "mountpoint": "/mnt/gentoo",
     "drives": {"root": "", "boot": "", "swap": None},
     "efi": False,

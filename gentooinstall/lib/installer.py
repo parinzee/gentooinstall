@@ -42,7 +42,7 @@ def preliminary_checks(hardware: Hardware):
             raise NetworkError from exception
 
         # Set system time using ntp
-        if not storage["args"].no_ntp:
+        if not storage.args["no_ntp"]:
             try:
                 set_system_time_ntp = progress.add_task(
                     "[yellow]Syncing system time with NTP...[/yellow]"

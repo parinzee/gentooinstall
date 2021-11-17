@@ -18,7 +18,7 @@ repos:
     hooks:
       - id: mypy
         name: MyPy
-        entry: poetry run mypy gentooinstall tests
+        entry: poetry run mypy gentooinstall
         pass_filenames: false
         language: system
   - repo: local
@@ -26,12 +26,5 @@ repos:
       - id: pylint
         name: Pylint
         entry: poetry run pylint -j 4 gentooinstall tests
-        pass_filenames: false
-        language: system
-  - repo: local
-    hooks:
-      - id: pytest
-        name: Pytest
-        entry: poetry run pytest
         pass_filenames: false
         language: system

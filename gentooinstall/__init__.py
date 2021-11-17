@@ -18,8 +18,14 @@ parser = argparse.ArgumentParser(
     description="The program aimed to help both beginners and experienced users install gentoo.",
 )
 
+# --config option
+parser.add_argument(
+    "--config",
+    action="store",
+    help="Optional JSON file or url that can be passed in to do an UNATTENDED install.",
+)
+
 # no-info option
-# Turns off informative things
 parser.add_argument(
     "--no-info",
     action="store_true",
@@ -27,18 +33,18 @@ parser.add_argument(
 )
 
 # no-info option
-# Script will not use ntp to sync the time
 parser.add_argument(
     "--no-ntp",
     action="store_true",
     help="Disables using NTP to sync the time. Use this if you have set the time manually.",
 )
 
+# If --config is specified, then we will overwrite values within the inital storage object
 
 # Keep the args in our storage
 arguments = parser.parse_args()
-storage["args"].no_info = arguments.no_info
-storage["args"].no_ntp = arguments.no_ntp
+storage.args["no_info"] = arguments.no_info
+storage.args["no_ntp"] = arguments.no_ntp
 
 
 def run_as_module():

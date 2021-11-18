@@ -3,7 +3,7 @@ Simple module for storing options that can be accessed throughout the program
 """
 import json
 import os
-from typing import Optional, TypedDict
+from typing import List, TypedDict
 from urllib.parse import urlparse
 
 import requests
@@ -15,19 +15,7 @@ class Args(TypedDict):
     Schema for the args dictionary inside Storage
     """
 
-    no_info: bool
     no_ntp: bool
-
-
-class Drives(TypedDict):
-    """
-    Schema for the drives dictionary in Storage
-    """
-
-    boot: str
-    root: str
-    # If swap is enable this will be a path or text that says swapfile
-    swap: Optional[str]
 
 
 class Storage:
@@ -41,8 +29,8 @@ class Storage:
         """
         Initiates the Storage class
         """
-        self.args: Args = {"no_info": False, "no_ntp": False}
-        self.drives: Drives = {"root": "", "boot": "", "swap": None}
+        self.args: Args = {"no_ntp": False}
+        self.drives: List[dict] = []
         self.mountpoint: str = "/mnt/gentoo"
 
         # Internal value to see if a config has been provided or not.

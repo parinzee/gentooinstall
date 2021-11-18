@@ -25,6 +25,6 @@ repos:
     hooks:
       - id: pylint
         name: Pylint
-        entry: poetry run pylint -j 4 gentooinstall tests
+        entry: poetry run pylint -j 4 gentooinstall
         pass_filenames: false
         language: system

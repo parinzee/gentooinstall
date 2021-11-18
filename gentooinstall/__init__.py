@@ -27,13 +27,6 @@ parser.add_argument(
 
 # no-info option
 parser.add_argument(
-    "--no-info",
-    action="store_true",
-    help="Disables explanations for steps from the Gentoo Handbook. NOT RECCOMENDED FOR BEGINNERS",
-)
-
-# no-info option
-parser.add_argument(
     "--no-ntp",
     action="store_true",
     help="Disables using NTP to sync the time. Use this if you have set the time manually.",
@@ -43,7 +36,6 @@ parser.add_argument(
 
 # Keep the args in our storage
 arguments = parser.parse_args()
-storage.args["no_info"] = arguments.no_info
 storage.args["no_ntp"] = arguments.no_ntp
 
 

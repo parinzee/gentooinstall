@@ -2,13 +2,12 @@
 This module houses the real brains of
 this script (which is a class named Script).
 """
-import subprocess
-
 import requests
 from rich.progress import Progress
 
-from .exceptions import CommandError, HardwareIncompatable, NetworkError
-from .gui import display
+from .exceptions import HardwareIncompatable, NetworkError
+from .general import run_command
+from .gui import display, prompt
 from .hardware import Hardware
 from .storage import storage
 
@@ -37,30 +36,21 @@ def preliminary_checks(hardware: Hardware):
             progress.update(check_internet, advance=50)
             requests.get("http://www.gooogle.com", timeout=7)
             progress.update(check_internet, advance=50)
-
         except (requests.ConnectionError, requests.Timeout) as exception:
             raise NetworkError from exception
 
         # Set system time using ntp
         if not storage.args["no_ntp"]:
-            try:
-                set_system_time_ntp = progress.add_task(
-                    "[yellow]Syncing system time with NTP...[/yellow]"
-                )
-                progress.update(set_system_time_ntp, advance=50)
-                subprocess.run(["timedatectl", "set-ntp", "true"], check=True)
-                progress.update(set_system_time_ntp, advance=50)
-            except subprocess.CalledProcessError as exception:
-                raise CommandError(
-                    exception.returncode,
-                    exception.cmd,
-                    exception.output,
-                    exception.stderr,
-                ) from exception
+            set_system_time_ntp = progress.add_task(
+                "[yellow]Syncing system time with NTP...[/yellow]"
+            )
+            progress.update(set_system_time_ntp, advance=50)
+            run_command("timedatectl set-ntp true")
+            progress.update(set_system_time_ntp, advance=50)
 
 
 def execute() -> None:
-    "Excute all the commands for installing Gentoo."
+    "Execute all the commands for installing Gentoo."
 
     # Show welcoming stuff
     display.show_welcome()
@@ -69,3 +59,7 @@ def execute() -> None:
     # Run checks before starting install
     hardware = Hardware()
     preliminary_checks(hardware)
+
+    # Start disk partitioning
+    display.show_all_disks()
+    disk = prompt.select_disk()  # pylint: disable=unused-variable

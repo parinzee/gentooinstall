@@ -18,7 +18,7 @@ repos:
     hooks:
       - id: mypy
         name: MyPy
-        entry: poetry run mypy gentooinstall
+        entry: poetry run mypy gentooinstall --show-error-codes
         pass_filenames: false
         language: system
   - repo: local

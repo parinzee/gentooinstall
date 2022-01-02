@@ -27,7 +27,7 @@ def select_disk():
     return selected
 
 
-def select_partitioning_scheme(disk: str) -> int:
+def select_partitioning_scheme(disk: str) -> Literal[1, 2, 3]:
     """
     This function prompts the user to select a partitioning scheme
     """
@@ -35,6 +35,7 @@ def select_partitioning_scheme(disk: str) -> int:
     console.print("[red]0: Abort Installation[/red]")
     console.print("[blue]1: Format entire drive and setup basic scheme[/blue]")
     console.print("[yellow]2: Keep existing partitions & select mountpoints[/yellow]")
+    console.print("[cyan]3: Use whatever is mounted at /mnt/gentoo[/cyan]")
     selected = IntPrompt.ask(
         "[green]Select what you want to do:[/green]", choices=[str(x) for x in range(3)]
     )
@@ -45,7 +46,7 @@ def select_partitioning_scheme(disk: str) -> int:
         )
         sys.exit()
 
-    return selected
+    return cast(Literal[1, 2, 3], selected)
 
 
 def select_partition_format(partition: str) -> Literal["ext4", "btrfs", "xfs"]:

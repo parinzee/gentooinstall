@@ -52,6 +52,19 @@ class Hardware:
         self.total_mem = get_mem_total()
         self.uefi = os.path.isdir("/sys/firmware/efi")
 
+    def suggested_swap_size(self) -> int:
+        """
+        Returns the suggested swap size in gigbytes
+        """
+        ram_in_gigs = int(str(self.total_mem)[0])
+        if ram_in_gigs <= 5:
+            swap_size = ram_in_gigs * 2
+        elif ram_in_gigs <= 15:
+            swap_size = ram_in_gigs // 2
+        else:
+            swap_size = 4
+        return swap_size
+
     def hardware_compatable(self) -> bool:
         """
         Checks compatability of the hardware
@@ -79,3 +92,6 @@ class Hardware:
         # TODO: More logic over here
 
         return packagelist
+
+
+hardware = Hardware()

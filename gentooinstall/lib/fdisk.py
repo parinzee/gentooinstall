@@ -47,7 +47,12 @@ class Fdisk:
             r".*Last sector, \+/-sectors or \+/-size{K,M,G,T,P} \(.*\): "
         )
         self.process.sendline(f"{size}")
-        self.process.expect(self.default_expect)
+        pattern = self.process.expect(
+            [r".*Do you want to remove the signature\?.*", self.default_expect]
+        )
+        if pattern == 0:
+            self.process.sendline("y")
+            self.process.expect(self.default_expect)
 
     def create_gpt_part(self, size: str, part_type: Optional[str]) -> None:
         """

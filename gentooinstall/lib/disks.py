@@ -9,7 +9,7 @@ from .general import run_command
 
 def dict_list_to_list(dict_list: List[dict]) -> List[list]:
     """
-    Changes a dict to a list
+    Changes a list of a dict to a list of a list
     """
     main_list = []
     for dictionary in dict_list:

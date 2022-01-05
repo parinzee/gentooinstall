@@ -37,7 +37,7 @@ def select_partitioning_scheme(disk: str) -> Literal[1, 2, 3]:
     console.print("[yellow]2: Keep existing partitions & select mountpoints[/yellow]")
     console.print("[cyan]3: Use whatever is mounted at /mnt/gentoo[/cyan]")
     selected = IntPrompt.ask(
-        "[green]Select what you want to do:[/green]", choices=[str(x) for x in range(3)]
+        "[green]Select what you want to do:[/green]", choices=["0", "1", "2", "3"]
     )
 
     if selected == 0:

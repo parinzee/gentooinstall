@@ -185,7 +185,7 @@ def partition_selected_disk() -> None:
             progress.update(partitioning_disk, advance=10)
 
 
-def format_partitions() -> None:
+def format_selected_partitions() -> None:
     """
     Formats the partitions that the installation will use.
     """
@@ -242,4 +242,4 @@ def execute() -> None:
         console.print("[red]No changes made[/red]")
         sys.exit()
     partition_selected_disk()
-    format_partitions()
+    format_selected_partitions()

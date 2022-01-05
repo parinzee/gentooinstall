@@ -50,7 +50,7 @@ class CommandError(subprocess.CalledProcessError):
         super().__init__(returncode, cmd, output=output, stderr=stderr)
 
 
-class HardwareIncompatable(Exception):
+class HardwareIncompatableError(Exception):
     """
     Exception raised when Hardware is incompatable
     """

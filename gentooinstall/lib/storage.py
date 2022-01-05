@@ -3,7 +3,7 @@ Simple module for storing options that can be accessed throughout the program
 """
 import json
 import os
-from typing import List, Optional, TypedDict
+from typing import List, Literal, Optional, TypedDict
 from urllib.parse import urlparse
 
 import requests
@@ -30,6 +30,8 @@ class Storage:
         Initiates the Storage class
         """
         self.args: Args = {"no_ntp": False}
+        self.part_scheme: Literal[0, 1, 2, 3] = 0
+        self.disk: str = ""
         self.partitions: Optional[List[dict]] = []
         self.mountpoint: str = "/mnt/gentoo"
 
@@ -42,6 +44,7 @@ class Storage:
         """
         config = {
             "args": self.args,
+            "partScheme": self.part_scheme,
             "drives": self.partitions,
             "mountpoint": self.mountpoint,
         }
@@ -69,6 +72,7 @@ class Storage:
 
         # Overwrite initial values
         self.args = config["args"]
+        self.part_scheme = config["partScheme"]
         self.partitions = config["partitions"]
         self.mountpoint = config["mountpoint"]
 

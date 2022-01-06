@@ -6,7 +6,7 @@ license = "AGPL-3.0-only"
 authors = ["Parinz <parinzee@protonmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.10"
 rich = "^10.13.0"
 requests = "^2.26.0"
 pexpect = "^4.8.0"

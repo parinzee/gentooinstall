@@ -31,13 +31,14 @@ def all_physical_disks() -> List[list]:
     return dict_list_to_list(blockdevices)
 
 
-def partitions_in_disk(disk: str) -> List[list]:
+def partitions_in_disk(path_to_disk: str) -> List[list]:
     """
     Returns all the partitions in the disk in the following form:
     [[name,size,fstype], [name,size,fstype]]
     """
     out = cast(
-        dict, run_command(f"lsblk /dev/{disk} --json -no name,size,fstype", True, True)
+        dict,
+        run_command(f"lsblk {path_to_disk} --json -no name,size,fstype", True, True),
     )
     partitions = out["blockdevices"][0]["children"]
     # Remove any children of the partitions
@@ -47,8 +48,11 @@ def partitions_in_disk(disk: str) -> List[list]:
     return dict_list_to_list(partitions)
 
 
-def format_filesystem(path_to_disk: str, fs_type: str) -> None:
+def format_filesystem(path_to_part: str, fs_type: str) -> None:
     """
     Runs mkfs.fs_type to format a disk.
     """
-    run_command(f"mkfs.{fs_type.lower()} {path_to_disk}")
+    if fs_type == "swap":
+        run_command(f"mkswap {path_to_part}")
+    else:
+        run_command(f"mkfs.{fs_type.lower()} {path_to_part}")

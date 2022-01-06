@@ -27,11 +27,11 @@ def select_disk():
     return selected
 
 
-def select_partitioning_scheme(disk: str) -> Literal[1, 2, 3]:
+def select_partitioning_scheme(path_to_disk: str) -> Literal[1, 2, 3]:
     """
     This function prompts the user to select a partitioning scheme
     """
-    show_disk_partitions(disk)
+    show_disk_partitions(path_to_disk)
     console.print("[red]0: Abort Installation[/red]")
     console.print("[blue]1: Format entire drive and setup basic scheme[/blue]")
     console.print("[yellow]2: Keep existing partitions & select mountpoints[/yellow]")

@@ -61,13 +61,13 @@ def show_all_disks() -> None:
     console.print(disk_table)
 
 
-def show_disk_partitions(disk: str) -> None:
+def show_disk_partitions(path_to_disk: str) -> None:
     """
     Displays partitions of a given disk within a table.
     """
-    partitions = partitions_in_disk(disk)
+    partitions = partitions_in_disk(path_to_disk)
     partition_table = table(
-        f"Partitions in {disk}",
+        f"Partitions in {path_to_disk}",
         ["Name", "Size", "Filesystem"],
         partitions,
         padding=True,

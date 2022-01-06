@@ -63,7 +63,7 @@ def store_disk_scheme() -> None:
     """
     # Prompt the user to select their disk and its scheme
     selected_disk = prompt.select_disk()
-    scheme_choice = prompt.select_partitioning_scheme(selected_disk)
+    scheme_choice = prompt.select_partitioning_scheme(f"/dev/{selected_disk}")
     # Set values in storage
     storage.disk = selected_disk
     storage.part_scheme = scheme_choice
@@ -116,7 +116,7 @@ def store_disk_scheme() -> None:
         console.print(
             "[bold italic yellow]Ensure you've formatted and ran mkfs or mkswap on your partitions."
         )
-        partitions = disks.partitions_in_disk(selected_disk)
+        partitions = disks.partitions_in_disk(f"/dev/{selected_disk}")
         # Making copy because we will modify partitions dict
         for index, part in enumerate(deepcopy(partitions)):
             mountpoint = Prompt.ask(
@@ -199,10 +199,7 @@ def format_selected_partitions() -> None:
                 "[yellow]Formatting partitions...", start=False
             )
             for partition in storage.partitions:
-                if partition["type"] == "swap":
-                    run_command(f"mkswap {partition['name']}")
-                else:
-                    disks.format_filesystem(partition["name"], partition["type"])
+                disks.format_filesystem(partition["name"], partition["type"])
             progress.advance(format_part, 100)
 
 

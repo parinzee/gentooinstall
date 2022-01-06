@@ -125,19 +125,19 @@ def store_disk_scheme() -> None:
             if mountpoint.lower() != "":
                 partitions[index].append(mountpoint.lower())
 
-            # We only want the partitions that the user will use.
-            partitions_to_use = list(filter(lambda x: x[3] is not None, partitions))
-            # Loop over the partitions in use to create a dictionary.
-            storage.partitions = []
-            for partition_info in partitions_to_use:
-                storage.partitions.append(
-                    {
-                        "name": partition_info[0],
-                        "type": partition_info[2],
-                        "size": partition_info[1],
-                        "mountpoint": partition_info[3],
-                    }
-                )
+        # We only want the partitions that the user will use.
+        partitions_to_use = list(filter(lambda x: x[3] is not None, partitions))
+        # Loop over the partitions in use to create a dictionary.
+        storage.partitions = []
+        for partition_info in partitions_to_use:
+            storage.partitions.append(
+                {
+                    "name": partition_info[0],
+                    "type": partition_info[2],
+                    "size": partition_info[1],
+                    "mountpoint": partition_info[3],
+                }
+            )
     elif scheme_choice == 3:
         storage.partitions = None
     else:
@@ -150,10 +150,12 @@ def partition_selected_disk() -> None:
     """
     Partitions selected disk if storage.part_scheme is 1
     """
-    with Progress(expand=True) as progress:
-        partitioning_disk = progress.add_task(f"[yellow]Partitioning {storage.disk}...")
-        progress.update(partitioning_disk, advance=40)
-        if storage.part_scheme == 1:
+    if storage.part_scheme == 1:
+        with Progress(expand=True) as progress:
+            partitioning_disk = progress.add_task(
+                f"[yellow]Partitioning {storage.disk}..."
+            )
+            progress.update(partitioning_disk, advance=40)
             if storage.partitions is None:
                 raise ValueError("storage.partitions is None")
             # Spawn an fdisk instance

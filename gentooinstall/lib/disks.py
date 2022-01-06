@@ -50,9 +50,24 @@ def partitions_in_disk(path_to_disk: str) -> List[list]:
 
 def format_filesystem(path_to_part: str, fs_type: str) -> None:
     """
-    Runs mkfs.fs_type to format a disk.
+    Runs mkfs.fs_type or mkswap to format a partition.
     """
     if fs_type == "swap":
         run_command(f"mkswap {path_to_part}")
     else:
         run_command(f"mkfs.{fs_type.lower()} {path_to_part}")
+
+
+def mount(path_to_part: str, dest: str, *args: str) -> None:
+    """
+    Mounts a partition to the specified location.
+    Accepts *args to pass into the mount command.
+    """
+    if args:
+        run_command(f"mount {path_to_part} {dest} {' '.join(args)}")
+    else:
+        run_command(f"mount {path_to_part} {dest}")
+
+    # Change permissions according to gentoo handbook
+    if "tmp" in dest:
+        run_command(f"chmod 1777 {dest}")

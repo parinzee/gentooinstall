@@ -33,7 +33,7 @@ def select_partitioning_scheme(path_to_disk: str) -> Literal[1, 2, 3]:
     """
     show_disk_partitions(path_to_disk)
     console.print("[red]0: Abort Installation[/red]")
-    console.print("[blue]1: Format entire drive and setup basic scheme[/blue]")
+    console.print("[blue]1: Format entire drive and setup basic scheme (reccomended)")
     console.print("[yellow]2: Keep existing partitions & select mountpoints[/yellow]")
     console.print("[cyan]3: Use whatever is mounted at /mnt/gentoo[/cyan]")
     selected = IntPrompt.ask(

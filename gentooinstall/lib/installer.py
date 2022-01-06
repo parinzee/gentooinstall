@@ -203,6 +203,17 @@ def format_selected_partitions() -> None:
             progress.advance(format_part, 100)
 
 
+def mount_selected_partitions() -> None:
+    """
+    Loops through the partitions in storage.partitions and mount them
+    """
+    if storage.part_scheme != 3:
+        if storage.partitions is None:
+            raise ValueError("storage.partitions is None")
+        for partition in storage.partitions:
+            disks.mount(partition["name"], "/mnt/gentoo" + partition["mountpoint"])
+
+
 def execute() -> None:
     "Execute all the commands for installing Gentoo."
 
@@ -242,3 +253,4 @@ def execute() -> None:
         sys.exit()
     partition_selected_disk()
     format_selected_partitions()
+    mount_selected_partitions()

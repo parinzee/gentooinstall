@@ -55,7 +55,6 @@ def show_all_disks() -> None:
     Shows a tables with available disks and shows
     descriptive text beside it.
     """
-    console.rule("Step 1: Partitioning the disks")
     disks = all_physical_disks()
     disk_table = table("", ["Name", "Size", "Label"], disks)
     console.print(disk_table)

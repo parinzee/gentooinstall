@@ -211,7 +211,10 @@ def mount_selected_partitions() -> None:
         if storage.partitions is None:
             raise ValueError("storage.partitions is None")
         for partition in storage.partitions:
-            disks.mount(partition["name"], "/mnt/gentoo" + partition["mountpoint"])
+            if partition["mountpoint"] != "swap":
+                disks.mount(partition["name"], "/mnt/gentoo" + partition["mountpoint"])
+            else:
+                run_command(f"swapon {partition['name']}")
 
 
 def execute() -> None:
@@ -225,6 +228,7 @@ def execute() -> None:
     preliminary_checks()
 
     # Start disk partitioning
+    console.rule("Step 1: Partitioning the disks")
     store_disk_scheme()
     # Confirm the user's choices
     if storage.partitions is not None:
@@ -254,3 +258,6 @@ def execute() -> None:
     partition_selected_disk()
     format_selected_partitions()
     mount_selected_partitions()
+
+    # Selecting a tarball
+    console.rule("Step 2: Installing the Gentoo installation files")

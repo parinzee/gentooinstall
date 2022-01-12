@@ -9,7 +9,7 @@ from rich.progress import Progress
 from rich.prompt import Prompt
 
 from . import disks
-from .exceptions import HardwareIncompatableError, NetworkError
+from .exceptions import HardwareIncompatableError, NoNetworkError
 from .fdisk import Fdisk
 from .general import run_command
 from .gui import display, prompt
@@ -44,7 +44,7 @@ def preliminary_checks():
             requests.get("http://www.gooogle.com", timeout=7)
             progress.update(check_internet, advance=50)
         except (requests.ConnectionError, requests.Timeout) as exception:
-            raise NetworkError from exception
+            raise NoNetworkError from exception
 
         # Set system time using ntp
         if not storage.args["no_ntp"]:

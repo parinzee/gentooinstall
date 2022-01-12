@@ -6,6 +6,12 @@ import subprocess
 
 class NetworkError(Exception):
     """
+    Exception raised when there is a generic network error.
+    """
+
+
+class NoNetworkError(Exception):
+    """
     Exception raised when the script can't access the internet.
     """
 

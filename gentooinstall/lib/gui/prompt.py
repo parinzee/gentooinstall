@@ -61,3 +61,37 @@ def select_partition_format(partition: str) -> Literal["ext4", "btrfs", "xfs"]:
             choices=["ext4", "btrfs", "xfs"],
         ),
     )
+
+
+def select_stage3() -> Literal[
+    "openrc", "systemd", "desktop-openrc", "desktop-systemd"
+]:
+    """
+    Prompts user to select the stage3 variant.
+    """
+    console.print(
+        "Desktop profiles [bold]do not[/bold] have a desktop pre-installed.",
+        style="on yellow",
+    )
+    console.print(
+        "They simply pre-compile all the pkgs a [bold blue] non-headless install needs.",
+        style="on yellow",
+    )
+    console.print(
+        "Use these for [bold]increased installation speed[/bold].", style="on yellow"
+    )
+    console.print("- [blue]OpenRC[/blue] Profile")
+    console.print(
+        "- [blue]OpenRC[/blue] with [italic yellow]desktop[/italic yellow] Profile"
+    )
+    console.print("- [red]Systemd[/red] Profile")
+    console.print(
+        "- [red]Systemd[/red] with [italic yellow]desktop[/italic yellow] Profile"
+    )
+    return cast(
+        Literal["openrc", "systemd", "desktop-openrc", "desktop-systemd"],
+        Prompt.ask(
+            "Select a stage3 type:",
+            choices=["openrc", "systemd", "desktop-openrc", "desktop-systemd"],
+        ),
+    )

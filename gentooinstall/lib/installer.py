@@ -8,7 +8,7 @@ import requests
 from rich.progress import Progress
 from rich.prompt import Prompt
 
-from . import disks
+from . import disks, system
 from .exceptions import HardwareIncompatableError, NoNetworkError
 from .fdisk import Fdisk
 from .general import run_command
@@ -259,5 +259,9 @@ def execute() -> None:
     format_selected_partitions()
     mount_selected_partitions()
 
-    # Selecting a tarball
+    # Selecting a and installing tarball
     console.rule("Step 2: Installing the Gentoo installation files")
+    stage3_variant = prompt.select_stage3()
+    system.install_stage3(
+        stage3_variant, optimal_mirror=not storage.args["no_optimal_mirror"]
+    )

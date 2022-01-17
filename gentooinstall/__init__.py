@@ -25,11 +25,18 @@ parser.add_argument(
     help="Optional JSON file or url that can be passed in to do an UNATTENDED install.",
 )
 
-# no-info option
+# no-ntp option
 parser.add_argument(
     "--no-ntp",
     action="store_true",
     help="Disables using NTP to sync the time. Use this if you have set the time manually.",
+)
+
+# no-optimal-mirror-api
+parser.add_argument(
+    "--no-optimal-mirror",
+    action="store_true",
+    help="Disables using 3rd party api to find optimal mirror.",
 )
 
 # If --config is specified, then we will overwrite values within the inital storage object
@@ -37,6 +44,7 @@ parser.add_argument(
 # Keep the args in our storage
 arguments = parser.parse_args()
 storage.args["no_ntp"] = arguments.no_ntp
+storage.args["no_optimal_mirror"] = arguments.no_optimal_mirror
 
 
 def run_as_module():

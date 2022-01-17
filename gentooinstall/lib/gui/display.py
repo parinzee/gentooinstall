@@ -48,6 +48,8 @@ def show_options() -> None:
     """
     if storage.args["no_ntp"]:
         warn("--no-ntp is on. Be sure you have set your system time correctly.")
+    if storage.args["no_optimal_mirror"]:
+        warn("--no-optimal-mirror is on. Download speed of stage3 will be slower.")
 
 
 def show_all_disks() -> None:

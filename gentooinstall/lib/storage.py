@@ -16,6 +16,7 @@ class Args(TypedDict):
     """
 
     no_ntp: bool
+    no_optimal_mirror: bool
 
 
 class Storage:
@@ -29,7 +30,7 @@ class Storage:
         """
         Initiates the Storage class
         """
-        self.args: Args = {"no_ntp": False}
+        self.args: Args = {"no_ntp": False, "no_optimal_mirror": False}
         self.part_scheme: Literal[0, 1, 2, 3] = 0
         self.disk: str = ""
         self.partitions: Optional[List[dict]] = []
@@ -48,6 +49,7 @@ class Storage:
             "drives": self.partitions,
             "mountpoint": self.mountpoint,
         }
+
         # Make sure that the path specified startes with a /
         if not path.startswith("/"):
             path = "/" + path
